@@ -1,3 +1,4 @@
+require('dotenv').config()
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
@@ -9,7 +10,7 @@ const checkForAuthenticationCookie = require('./middlewares/authentication');
 const app = express();
 const Port = process.env.PORT || 3000;
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/blogify').then(() => {
+mongoose.connect(process.env.DB_URL).then(() => {
     console.log('Connected to MongoDB');
 }).catch((err) => {
     console.error('Error connecting to MongoDB:', err);
@@ -37,5 +38,5 @@ app.use('/user', userRoutes);
 
 // start the server on the specified port
 app.listen(Port, () => {
-    console.log(`Server is running on port ${Port}`);
+    console.log(`Server is running on port ${process.env.PORT}`);
 });

@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 
 // secret key for signing JWTs
-const JWT_SECRET = "$uperMan@51214";
+const JWT_SECRET = process.env.JWT_SECRET;
 // function to generate a JWT for a user
 function generateToken(user) {
     const payload = {

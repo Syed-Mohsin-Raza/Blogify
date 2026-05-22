@@ -43,7 +43,7 @@ userSchema.pre('save', function (next) {
     const hashedPassword = crypto.createHmac('sha512', salt).update(user.password).digest('hex');
     this.salt = salt;
     this.password = hashedPassword;
-    next();
+    // next();
 });
 
 userSchema.static('matchPasswordAndGenerateToken', async function (email, password) {
