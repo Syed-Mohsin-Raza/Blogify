@@ -4,7 +4,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 
+const Blog = require('./models/blog')
+
 const userRoutes = require('./routes/user');
+const blogRoutes = require('./routes/blog');
+
 const checkForAuthenticationCookie = require('./middlewares/authentication');
 
 const app = express();
@@ -28,13 +32,16 @@ app.set('view engine', 'ejs');
 app.set('views', path.resolve("./views"));
 
 // define a route handler for the default home page
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+    const allBlogs = await Blog.find({}); 
     res.render('home', { 
-        user: req.user
+        user: req.user,
+        blogs: allBlogs,
      });
 });
 
 app.use('/user', userRoutes);
+app.use('/blog', blogRoutes);
 
 // start the server on the specified port
 app.listen(Port, () => {
